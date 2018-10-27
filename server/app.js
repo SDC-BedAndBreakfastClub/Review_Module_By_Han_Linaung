@@ -1,53 +1,31 @@
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var faker = require('faker');
-var mysql = require('mysql');
-var con = require('./database');
+const express = require('express');
 
-app.use(express.static(__dirname + '/../client/dist'));
+const app = express();
+
+const bodyParser = require('body-parser');
+
+const path = require('path');
+
+const con = require('./database');
+
+app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(bodyParser.json());
 
-app.get('/seed', function(req, res) {
-    res.send(seed());
-})
 
-var generateReview = function() {
-	var review = [];
+app.get('/', (req, res) => {
+	console.log('req body is:', req.body);
+	res.send(get());
+});
 
-	const reviewObj = {
-		id: faker.random.uuid(),
-		listing_id: faker.random.uuid(),
-		author: faker.name.findName(),
-		user_id: faker.random.uuid(),
-		avatar_url: faker.image.avatar(),
-		date: faker.date.past(5),
-		body: faker.lorem.paragraphs(),
-		flagged: faker.random.boolean()
-	}
-
-	for (var key in reviewObj) {
-		review.push(reviewObj[key]);
-	};
-
-	return review;
-}
-
-
-var seed = function() {
-	var reviews = [];
-	var target = 100;
-	while (target > 0) {
-		reviews.push(generateReview());
-		target--;
-	}
-
-	con.query('INSERT INTO reviews (id, listing_id, author, user_id, avatar_url, date, body, flagged) VALUES ?',
-		[reviews], (err, res) => {
-			if(err) throw err;
-
-			console.log(res.changedRows);
-		});
+var get = function(cb) {
+	con.query('SELECT * FROM reviews', (err, res) => {
+		if (err) {
+			throw err;
+		} else {
+			console.log('get has been invoked successfully')
+			return res;
+		}
+	});
 }
 
 

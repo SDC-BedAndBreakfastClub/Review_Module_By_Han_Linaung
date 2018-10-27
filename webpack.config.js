@@ -11,11 +11,17 @@ module.exports = {
                 presets: ['@babel/preset-react', '@babel/preset-env']
               }
             }
-          }
+          },
         ]
       },
        output: {
         filename: 'bundle.js',
         path: __dirname + '/client/dist'
+      },
+      node: {
+          fs: 'empty',
+          net: 'empty',
+          tls: 'empty',
+          dns: 'empty'
       }
     };
