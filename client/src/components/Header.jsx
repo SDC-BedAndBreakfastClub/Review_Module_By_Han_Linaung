@@ -1,5 +1,5 @@
-var Headers = () => {
+var Header = (props) => (
+	<div>header component</div>
+)
 
-}
-
-export default Headers;
+export default Header;
