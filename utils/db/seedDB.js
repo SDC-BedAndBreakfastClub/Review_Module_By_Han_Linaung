@@ -20,8 +20,8 @@ var generateReview = function() {
 
 
 var seed = function() {
-	var reviews = [];
-	var target = 100;
+	let reviews = [];
+	let target = 100;
 	while (target > 0) {
 		reviews.push(generateReview());
 		target--;
@@ -31,8 +31,8 @@ var seed = function() {
 		[reviews], (err, res) => {
 			if(err) throw err;
 
-			console.log(res.affectedRows)
+			console.log(res.affectedRows);
 		});
-}
+};
 
 seed();

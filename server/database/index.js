@@ -1,15 +1,15 @@
-var mysql = require('mysql');
-var db = require('../../db.config.js');
+const mysql = require('mysql');
+const db = require('../../db.config.js');
 
-var con = mysql.createConnection({
-  user: "root",
+const con = mysql.createConnection({
+  user: 'root',
   password: db.DB_PW,
-  database: "airbnb"
+  database: 'airbnb',
 });
 
-con.connect(function(err) {
+con.connect((err) => {
   if (err) throw err;
-  console.log("connection successful!");
+  console.log('connected successfully');
 });
 
 module.exports = con;
