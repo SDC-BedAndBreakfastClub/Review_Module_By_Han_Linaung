@@ -1,13 +1,9 @@
-var Reviews = ({reviewsData}) => {
-	return (
-		<div>
-			{reviewsData}
-		</div>
-	)
-}
+var Reviews = ({reviewsData}) => (
+	<div>
+		{reviewsData.map((review, i) => 
+			<div className="review" key={review.id}>{review.body}</div>
+		)}
+	</div>
+)
 
 export default Reviews;
-
-			// {reviewsData.map((review, i) => 
-			// 	<div key="{review.id}">{review.body}</div>
-			// )}

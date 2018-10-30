@@ -12,9 +12,13 @@ class App extends React.Component {
 		};
 	}
 
+	componentDidMount() {
+		this.getReviews();
+	}
+
 	getReviews() {
 		$.ajax({
-			url: '/',
+			url: '/reviews',
 			type: 'GET', 
 			contentType: 'application/json',
 			success: (data) => {
@@ -23,8 +27,8 @@ class App extends React.Component {
 					reviews: data
 				})
 			}, 
-			error: function() {
-				console.log('fail');
+			error: function(error) {
+				console.error('failed to fetch reviews', error);
 			}
 		})
 	};
@@ -36,7 +40,7 @@ class App extends React.Component {
 				<h1>hi from react</h1>
 				<Header />
 				<Ratings />
-				<Reviews reviewsData={this.getReviews()}/>
+				<Reviews reviewsData={this.state.reviews}/>
 			</div>
 		)
 	}

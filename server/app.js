@@ -6,27 +6,18 @@ const bodyParser = require('body-parser');
 
 const path = require('path');
 
-const con = require('./database');
+const fetchAll = require('./model/index.js');
 
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(bodyParser.json());
 
+app.get('/reviews', function(req, res) {
+	fetchAll((error, data) => {
+		if (error) {
+			console.log(error, 'error fetching from db');
+		};
 
-app.get('/', (req, res) => {
-	console.log('req body is:', req.body);
-	res.send(get());
-});
-
-var get = function(cb) {
-	con.query('SELECT * FROM reviews', (err, res) => {
-		if (err) {
-			throw err;
-		} else {
-			console.log('get has been invoked successfully')
-			return res;
-		}
-	});
-}
-
+		res.send(data);
+})});
 
 app.listen(3001);
