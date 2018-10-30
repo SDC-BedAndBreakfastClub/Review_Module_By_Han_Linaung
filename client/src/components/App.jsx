@@ -2,6 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import Header from './Header';
 import Ratings from './Ratings';
+import Reviews from './Reviews';
 
 class App extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class App extends React.Component {
         });
       },
       error: (error) => {
-        throw error;
+        console.error('error fetching data from db', error);
       },
     });
   }
