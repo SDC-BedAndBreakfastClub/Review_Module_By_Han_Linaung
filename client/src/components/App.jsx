@@ -33,7 +33,7 @@ class App extends React.Component {
         });
       },
       error: (error) => {
-        throw error;
+        console.error('error fetching data from db', error);
       },
     });
   }
