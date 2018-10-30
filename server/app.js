@@ -11,7 +11,7 @@ const fetchAll = require('./model/index.js');
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(bodyParser.json());
 
-app.get('/:listingId/reviews', (req, res) => {
+app.get('/api/rooms/:listingId/reviews', (req, res) => {
   const id = req.params('listingId');
   fetchAll(id, (error, data) => {
     if (error) {

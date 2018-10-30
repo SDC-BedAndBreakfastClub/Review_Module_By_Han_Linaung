@@ -21,7 +21,7 @@ class App extends React.Component {
 
   getReviews(listingId) {
     $.ajax({
-      url: '/:listingId/reviews',
+      url: '/api/rooms/:listingId/reviews',
       type: 'GET',
       contentType: 'application/json',
       data: {
