@@ -11,13 +11,14 @@ const fetchAll = require('./model/index.js');
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(bodyParser.json());
 
-app.get('/reviews', function(req, res) {
-	fetchAll((error, data) => {
-		if (error) {
-			console.log(error, 'error fetching from db');
-		};
-
-		res.send(data);
-})});
+app.get('/:listingId/reviews', (req, res) => {
+  const id = req.params('listingId');
+  fetchAll(id, (error, data) => {
+    if (error) {
+      throw error;
+    }
+    res.send(data);
+  });
+});
 
 app.listen(3001);
