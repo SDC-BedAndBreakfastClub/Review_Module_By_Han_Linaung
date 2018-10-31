@@ -5,6 +5,7 @@ function fetchAll(id, cb) {
     if (err) {
       throw err;
     } else {
+    	console.log('res is: ', res.length);
       cb(err, res);
     }
   });

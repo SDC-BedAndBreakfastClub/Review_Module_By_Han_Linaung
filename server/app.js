@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 
 app.get('/api/rooms/:listingId/reviews', (req, res) => {
   const id = req.params.listingId;
+  console.log(id);
   fetchAll(id, (error, data) => {
     if (error) {
       throw error;

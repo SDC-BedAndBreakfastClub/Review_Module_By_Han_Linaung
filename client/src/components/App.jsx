@@ -3,14 +3,13 @@ import $ from 'jquery';
 import Header from './Header';
 import Ratings from './Ratings';
 import Reviews from './Reviews';
-import styles from './App.css';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      listingId: null,
+      listingId: 3,
       reviews: [],
     };
   }
@@ -22,12 +21,9 @@ class App extends React.Component {
 
   getReviews(listingId) {
     $.ajax({
-      url: '/api/rooms/:listingId/reviews',
+      url: `/api/rooms/${listingId}/reviews`,
       type: 'GET',
       contentType: 'application/json',
-      data: {
-        listingId,
-      },
       success: (data) => {
         this.setState({
           reviews: data,
@@ -43,7 +39,7 @@ class App extends React.Component {
     const { reviews } = this.state;
     return (
       <div>
-        <h1 className={styles.title}>hi from react</h1>
+        <h1>Reviews</h1>
         <Header />
         <Ratings />
         <Reviews reviewsData={reviews} />
