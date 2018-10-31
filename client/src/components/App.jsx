@@ -3,6 +3,7 @@ import $ from 'jquery';
 import Header from './Header';
 import Ratings from './Ratings';
 import Reviews from './Reviews';
+import styles from './App.css';
 
 class App extends React.Component {
   constructor(props) {
@@ -42,7 +43,7 @@ class App extends React.Component {
     const { reviews } = this.state;
     return (
       <div>
-        <h1>hi from react</h1>
+        <h1 className={styles.title}>hi from react</h1>
         <Header />
         <Ratings />
         <Reviews reviewsData={reviews} />
