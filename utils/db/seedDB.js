@@ -7,7 +7,7 @@ const listings = [];
 function generateReview() {
   let count = 0;
   while (count < 100) {
-    listings.push(faker.random.number({min:1, max:100}););
+    listings.push(faker.random.number({ min: 1, max: 100 }));
     count += 1;
   }
 
