@@ -2,10 +2,18 @@ const faker = require('faker');
 
 const db = require('../../server/database');
 
+const listings = [];
+
 function generateReview() {
+  let count = 0;
+  while (count < 100) {
+    listings.push(faker.random.number({ min: 1, max: 100 }));
+    count += 1;
+  }
+
   const reviewObj = {
     id: faker.random.uuid(),
-    listing_id: faker.random.uuid(),
+    listing_id: listings[faker.random.number(99)],
     author: faker.name.findName(),
     user_id: faker.random.uuid(),
     avatar_url: faker.image.avatar(),
