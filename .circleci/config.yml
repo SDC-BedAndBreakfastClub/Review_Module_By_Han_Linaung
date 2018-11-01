@@ -26,21 +26,18 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: |
-          npm install
-          cp ./config/config.example.js ./config/config.js
+      - run: npm install
+
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
+        
       # create bundle.js
       - run: npm build
         
-      # run linter!
+      # run tests
       - run:
-          name: Linter
-          command: npm eslint .
-      # - run:
-      #     name: Jest
-      #     command: npm jest
+          name: Jest
+          command: npm test
+
