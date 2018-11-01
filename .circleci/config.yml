@@ -36,10 +36,7 @@ jobs:
       # create bundle.js
       - run: npm build
         
-      # run linter!
-      - run:
-          name: Linter
-          command: npm eslint .
+      # run tests
       - run:
           name: Jest
           command: npm jest
