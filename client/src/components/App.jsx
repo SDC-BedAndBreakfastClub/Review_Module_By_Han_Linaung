@@ -10,7 +10,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      listingId: null,
+      listingId: 3,
       reviews: [],
     };
   }
@@ -22,7 +22,7 @@ class App extends React.Component {
 
   getReviews(listingId) {
     $.ajax({
-      url: '/api/rooms/:listingId/reviews',
+      url: `/api/rooms/${listingId}/reviews`,
       type: 'GET',
       contentType: 'application/json',
       data: {
@@ -43,7 +43,7 @@ class App extends React.Component {
     const { reviews } = this.state;
     return (
       <div>
-        <h1 className={styles.title}>hi from react</h1>
+        <h1 className={styles.title}>Reviews</h1>
         <Header />
         <Ratings />
         <Reviews reviewsData={reviews} />
