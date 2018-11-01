@@ -39,7 +39,7 @@ class App extends React.Component {
     const { reviews } = this.state;
     return (
       <div>
-        <h1>Reviews</h1>
+        <h1>{reviews.length} Reviews</h1>
         <Header />
         <Ratings />
         <Reviews reviewsData={reviews} />
