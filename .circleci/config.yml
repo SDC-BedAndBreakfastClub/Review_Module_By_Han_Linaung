@@ -33,7 +33,14 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
         
-      # run tests!
-      - run: npm test
-
+      # create bundle.js
+      - run: npm build
+        
+      # run linter!
+      - run:
+          name: Linter
+          command: npm eslint .
+      - run:
+          name: Jest
+          command: npm jest
 
