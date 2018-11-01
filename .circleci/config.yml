@@ -39,5 +39,5 @@ jobs:
       # run tests
       - run:
           name: Jest
-          command: npm jest
+          command: npm test
 
