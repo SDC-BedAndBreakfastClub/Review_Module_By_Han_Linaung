@@ -40,7 +40,6 @@ class App extends React.Component {
     let rating = {};
     const { reviews } = this.state;
     rating = reviews.reduce((acc, review) => {
-      console.log(typeof acc.accuracy);
       acc.accuracy += review.accuracy;
       acc.communication += review.communication;
       acc.cleanliness += review.cleanliness;
@@ -61,9 +60,7 @@ class App extends React.Component {
     Object.keys(rating).forEach((category) => {
       Math.round(rating[category] /= reviews.length);
     });
-
-    console.log('rating is ', rating);
-
+    
     return rating;
   }
 
