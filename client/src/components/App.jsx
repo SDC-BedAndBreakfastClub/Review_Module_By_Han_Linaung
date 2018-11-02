@@ -46,7 +46,6 @@ class App extends React.Component {
       acc.location += review.location;
       acc.check_in += review.check_in;
       acc.value += review.value;
-      console.log('acc is now', acc);
       return acc;
     }, {
       accuracy: 0,
@@ -60,7 +59,7 @@ class App extends React.Component {
     Object.keys(rating).forEach((category) => {
       Math.round(rating[category] /= reviews.length);
     });
-    
+
     return rating;
   }
 
