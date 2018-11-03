@@ -1,6 +1,5 @@
 import React from 'react';
 import $ from 'jquery';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './Header';
 import Ratings from './Ratings';
 import Reviews from './Reviews';
@@ -64,8 +63,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { reviews } = this.state;
-    const { rating } = this.state;
+    const { reviews, rating } = this.state;
     return (
       <div>
         <Header numReviews={reviews.length} />
