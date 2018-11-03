@@ -3,9 +3,13 @@ import PropTypes from 'prop-types';
 import styles from './Reviews.css';
 
 const Reviews = ({ reviewsData }) => (
-  <div>
+  <div className="container">
     {reviewsData.map(review => (
-      <div className={styles.review} key={review.id}>{review.body}</div>
+      <div className="row" key={review.id}>
+        <div className="col-xs-12">
+          {review.body}
+        </div>
+      </div>
     ))}
   </div>
 );

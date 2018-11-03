@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './Header';
 import Ratings from './Ratings';
 import Reviews from './Reviews';
@@ -11,13 +12,14 @@ class App extends React.Component {
     this.state = {
       listingId: 17,
       reviews: [],
+      rating: {},
     };
+
   }
 
   componentDidMount() {
     const { listingId } = this.state;
     this.getReviews(listingId);
-    this.getOverallRating();
   }
 
   getReviews(listingId) {
@@ -26,9 +28,7 @@ class App extends React.Component {
       type: 'GET',
       contentType: 'application/json',
       success: (data) => {
-        this.setState({
-          reviews: data,
-        });
+        const rating = this.getOverallRating(data);
       },
       error: (error) => {
         console.error('error fetching data from db', error);
@@ -36,9 +36,8 @@ class App extends React.Component {
     });
   }
 
-  getOverallRating() {
+  getOverallRating(reviews) {
     let rating = {};
-    const { reviews } = this.state;
     rating = reviews.reduce((acc, review) => {
       acc.accuracy += review.accuracy;
       acc.communication += review.communication;
@@ -60,17 +59,21 @@ class App extends React.Component {
       Math.round(rating[category] /= reviews.length);
     });
 
-    return rating;
+    this.setState({
+      reviews,
+      rating,
+    });
   }
 
   render() {
     const { reviews } = this.state;
+    const { rating } = this.state;
     return (
       <div>
         <Header numReviews={reviews.length} />
         <hr />
-        <Ratings rating={this.getOverallRating()} />
-        <Reviews reviewsData={reviews} />
+        <Ratings rating={rating} />
+        <Reviews className="container" reviewsData={reviews} />
       </div>
     );
   }
