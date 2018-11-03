@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import styles from './App.css';
 import Header from './Header';
 import Ratings from './Ratings';
 import Reviews from './Reviews';
@@ -65,7 +66,7 @@ class App extends React.Component {
   render() {
     const { reviews, rating } = this.state;
     return (
-      <div>
+      <div className={styles.body}>
         <Header numReviews={reviews.length} />
         <hr />
         <Ratings rating={rating} />
