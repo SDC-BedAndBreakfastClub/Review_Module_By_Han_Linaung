@@ -9,7 +9,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      listingId: 3,
+      listingId: 17,
       reviews: [],
     };
   }
@@ -17,6 +17,7 @@ class App extends React.Component {
   componentDidMount() {
     const { listingId } = this.state;
     this.getReviews(listingId);
+    this.getOverallRating();
   }
 
   getReviews(listingId) {
@@ -35,13 +36,40 @@ class App extends React.Component {
     });
   }
 
+  getOverallRating() {
+    let rating = {};
+    const { reviews } = this.state;
+    rating = reviews.reduce((acc, review) => {
+      acc.accuracy += review.accuracy;
+      acc.communication += review.communication;
+      acc.cleanliness += review.cleanliness;
+      acc.location += review.location;
+      acc.check_in += review.check_in;
+      acc.value += review.value;
+      return acc;
+    }, {
+      accuracy: 0,
+      communication: 0,
+      cleanliness: 0,
+      location: 0,
+      check_in: 0,
+      value: 0,
+    });
+
+    Object.keys(rating).forEach((category) => {
+      Math.round(rating[category] /= reviews.length);
+    });
+
+    return rating;
+  }
+
   render() {
     const { reviews } = this.state;
     return (
       <div>
-        <h1>Reviews</h1>
-        <Header />
-        <Ratings />
+        <Header numReviews={reviews.length} />
+        <hr />
+        <Ratings rating={this.getOverallRating()} />
         <Reviews reviewsData={reviews} />
       </div>
     );
