@@ -14,7 +14,6 @@ class App extends React.Component {
       reviews: [],
       rating: {},
     };
-
   }
 
   componentDidMount() {
@@ -28,7 +27,7 @@ class App extends React.Component {
       type: 'GET',
       contentType: 'application/json',
       success: (data) => {
-        const rating = this.getOverallRating(data);
+        this.getOverallRating(data);
       },
       error: (error) => {
         console.error('error fetching data from db', error);
@@ -60,8 +59,7 @@ class App extends React.Component {
     });
 
     this.setState({
-      reviews,
-      rating,
+      reviews, rating,
     });
   }
 
