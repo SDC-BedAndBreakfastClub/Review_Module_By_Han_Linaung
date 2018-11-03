@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 const Ratings = ({ rating }) => (
   <div>
-    {Object.keys(rating).map((category, i) => (
-      <div key={i}>
+    {Object.keys(rating).map(category => (
+      <div key={category}>
         {category}
         <div>
           {rating[category]}
@@ -15,7 +15,14 @@ const Ratings = ({ rating }) => (
 );
 
 Ratings.propTypes = {
-  rating: PropTypes.shape.isRequired,
+  rating: PropTypes.shape({
+    accuracy: PropTypes.number,
+    communication: PropTypes.number,
+    cleanliness: PropTypes.number,
+    location: PropTypes.number,
+    check_in: PropTypes.number,
+    value: PropTypes.number,
+  }).isRequired,
 };
 
 export default Ratings;
