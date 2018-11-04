@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import classNames from 'classnames';
 import styles from './App.css';
 import Header from './Header';
 import Ratings from './Ratings';
@@ -13,6 +14,7 @@ class App extends React.Component {
       listingId: 17,
       reviews: [],
       rating: {},
+      aggregateRating: null,
     };
   }
 
@@ -27,7 +29,7 @@ class App extends React.Component {
       type: 'GET',
       contentType: 'application/json',
       success: (data) => {
-        this.getOverallRating(data);
+        this.getRatingBreakdown(data);
       },
       error: (error) => {
         console.error('error fetching data from db', error);
@@ -35,7 +37,7 @@ class App extends React.Component {
     });
   }
 
-  getOverallRating(reviews) {
+  getRatingBreakdown(reviews) {
     let rating = {};
     rating = reviews.reduce((acc, review) => {
       acc.accuracy += review.accuracy;
@@ -55,22 +57,27 @@ class App extends React.Component {
     });
 
     Object.keys(rating).forEach((category) => {
-      Math.round(rating[category] /= reviews.length);
+      rating[category] /= reviews.length;
     });
 
+    const aggregateRating = Object.keys(rating).reduce((acc, category) => {
+      acc += rating[category];
+      return acc;
+    }, 0) / reviews.length;
+
     this.setState({
-      reviews, rating,
+      reviews, rating, aggregateRating,
     });
   }
 
   render() {
-    const { reviews, rating } = this.state;
+    const { reviews, rating, aggregateRating } = this.state;
     return (
-      <div className={styles.body}>
-        <Header numReviews={reviews.length} />
+      <div className={classNames({ [styles.body]: true, container: true })}>
+        <Header className="row" numReviews={reviews.length} aggregateRating={aggregateRating} />
         <hr />
-        <Ratings rating={rating} />
-        <Reviews className="container" reviewsData={reviews} />
+        <Ratings className="row" rating={rating} />
+        <Reviews className="row" reviewsData={reviews} />
       </div>
     );
   }

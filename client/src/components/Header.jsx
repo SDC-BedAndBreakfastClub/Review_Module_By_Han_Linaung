@@ -6,14 +6,15 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faStar);
 
-const Header = ({ numReviews, numStars }) => (
+const Header = ({ numReviews, overallRating }) => (
   <div>
-    {numReviews} Reviews
+    <h2>{numReviews} Reviews</h2>
     <FontAwesomeIcon icon="star" />
     <FontAwesomeIcon icon="star" />
     <FontAwesomeIcon icon="star" />
     <FontAwesomeIcon icon="star" />
     <FontAwesomeIcon icon="star" />
+    {overallRating}
     <input type="text" placeholder="Search reviews" name="search" />
   </div>
 );
