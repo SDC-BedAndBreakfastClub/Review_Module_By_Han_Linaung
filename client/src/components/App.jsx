@@ -11,7 +11,6 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      listingId: 17,
       reviews: [],
       rating: {},
       aggregateRating: null,
@@ -19,13 +18,12 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    const { listingId } = this.state;
-    this.getReviews(listingId);
+    this.getReviews();
   }
 
-  getReviews(listingId) {
+  getReviews() {
     $.ajax({
-      url: `/api/rooms/${listingId}/reviews`,
+      url: `http://localhost:3001/api${window.location.pathname}/reviews`,
       type: 'GET',
       contentType: 'application/json',
       success: (data) => {
