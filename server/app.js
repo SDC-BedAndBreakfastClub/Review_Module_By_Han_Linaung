@@ -6,10 +6,13 @@ const bodyParser = require('body-parser');
 
 const path = require('path');
 
+const cors = require('cors');
+
 const fetchAll = require('./model/index.js');
 
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get('/api/rooms/:listingId/reviews', (req, res) => {
   const id = req.params.listingId;
