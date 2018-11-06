@@ -6,6 +6,10 @@ import Reviews from '../client/src/components/Reviews';
 
 describe('App Component Unit Tests', () => {
   let wrapper;
+  global.window = {};
+  global.window.location = {};
+  global.window.location.pathname = '/rooms/17';
+  
   beforeEach(() => {
     wrapper = shallow(<App />);
   });

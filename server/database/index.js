@@ -1,9 +1,9 @@
 const mysql = require('mysql');
-const db = require('../../db.config.js');
+const config = require('../../db.config.js');
 
 const con = mysql.createConnection({
-  user: 'root',
-  password: db.DB_PW,
+  user: config.DB_USER,
+  password: config.DB_PW,
   database: 'airbnb',
 });
 

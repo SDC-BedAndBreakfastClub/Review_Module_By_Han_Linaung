@@ -1,4 +1,4 @@
-const results = require('./data/listing3.json');
+const results = require('./data/listing17.json');
 
 const $ = {
   ajax(options) {

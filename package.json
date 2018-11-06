@@ -11,6 +11,7 @@
     "start": "nodemon server/app.js",
     "react-dev": "webpack -d --watch",
     "db:seed": "node utils/db/seedDB.js",
+    "db:reset": "mysql -u student -p < server/schema.sql",
     "test": "jest"
   },
   "dependencies": {
