@@ -61,8 +61,9 @@ class App extends React.Component {
     });
 
     const aggregateRating = Object.keys(rating).reduce((acc, category) => {
-      acc += rating[category];
-      return acc;
+      let total = acc;
+      total += rating[category];
+      return total;
     }, 0) / reviews.length;
 
     this.setState({
