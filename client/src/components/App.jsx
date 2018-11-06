@@ -74,7 +74,7 @@ class App extends React.Component {
     const { reviews, rating, aggregateRating } = this.state;
     return (
       <div className={classNames({ [styles.body]: true, container: true })}>
-        <Header className="row" numReviews={reviews.length} aggregateRating={aggregateRating} />
+        <Header className="container" numReviews={reviews.length} aggregateRating={aggregateRating} />
         <hr />
         <Ratings className="row" rating={rating} />
         <Reviews className="row" reviewsData={reviews} />
