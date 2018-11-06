@@ -23,7 +23,7 @@ class App extends React.Component {
 
   getReviews() {
     $.ajax({
-      url: `http://localhost:3001/api${window.location.pathname}reviews`,
+      url: `http://localhost:3001/api${window.location.pathname}/reviews`,
       type: 'GET',
       contentType: 'application/json',
       success: (data) => {
