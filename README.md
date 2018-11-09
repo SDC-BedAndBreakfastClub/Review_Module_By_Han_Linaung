@@ -1,13 +1,12 @@
-# Project Name
+# AirBnB-Clone Reviews Module
 
-> Project description
+> Service responsible for rendering a component clone of Airbnb's Reviews Module.
 
 ## Related Projects
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
+  - https://github.com/BedandBreakfastClub/airbnb-clone-photo-module
+  - https://github.com/BedandBreakfastClub/airbnb-clone-booking-module
+  - https://github.com/BedandBreakfastClub/airbnb-clone-similar-listings-module
 
 ## Table of Contents
 
@@ -17,14 +16,18 @@
 
 ## Usage
 
-> Some usage instructions
+> Download, install and run all the related project services, then run the following command:
+```sh
+npm run react-dev
+npm start
+```
 
 ## Requirements
 
 An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
 
-- Node 6.13.0
-- etc
+- Node 8.12.0
+- MySQL 5.7
 
 ## Development
 
@@ -33,7 +36,32 @@ An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
 From within the root directory:
 
 ```sh
-npm install -g webpack
 npm install
 ```
 
+### Configuration
+
+From within the root directory:
+
+```
+cp example.config.js db.config.js
+```
+
+Edit the db.config.js file and replace the YOUR_DB_USERNAME an'YOUR_DB_PASSWORD fields with your MySQL username and password.
+
+### Seeding the database
+
+From within the root directory:
+
+```
+npm run db:seed
+```
+
+### Running the server
+
+From within the root directory:
+
+```
+npm run react-dev
+npm start
+```
