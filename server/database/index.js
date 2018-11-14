@@ -1,14 +1,24 @@
-const mysql = require('mysql');
-const config = require('../../db.config.js');
+const mongoose = require("mongoose");
+mongoose.connect(
+  "mongodb://localhost/test",
+  { useNewUrlParser: true }
+);
 
-const con = mysql.createConnection({
-  user: config.DB_USER,
-  password: config.DB_PW,
-  database: 'airbnb',
+var db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", function() {
+  // we're connected!
 });
 
-con.connect((err) => {
-  if (err) throw err;
+var RoomSchema = new mongoose.Schema({
+  name: String,
+  accuracy: Number,
+  communication: Number,
+  cleanliness: Number,
+  location: Number,
+  check_in: Number,
+  value: Number,
+  reviews: Array
 });
-
-module.exports = con;
+var Room = mongoose.model("Room", RoomSchema, "Room");
+module.exports = Room;

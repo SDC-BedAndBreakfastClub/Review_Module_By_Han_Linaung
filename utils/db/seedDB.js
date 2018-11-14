@@ -1,69 +1,141 @@
-const faker = require('faker');
+const faker = require("faker");
+const fs = require("fs");
+const moment = require("moment");
 
-const db = require('../../server/database');
+const db = require("../../server/database");
 
-const listings = [];
+let numDesired = 11000000;
+let numofreviews = 10;
 
 function generateReview() {
   let count = 0;
-  while (count < 100) {
-    listings.push(faker.random.number({ min: 1, max: 100 }));
-    count += 1;
+  let reviews = [];
+  while (count++ < numofreviews) {
+    reviews.push([
+      count,
+      faker.name.findName(),
+      faker.image.avatar(),
+      moment(faker.date.past(10)).format("MMMM YYYY"),
+      faker.lorem.paragraph(),
+      faker.random.boolean()
+    ]);
   }
-
-  const reviewObj = {
-    id: faker.random.uuid(),
-    listing_id: listings[faker.random.number(99)],
-    rating_id: faker.random.uuid(),
-    author: faker.name.findName(),
-    user_id: faker.random.uuid(),
-    avatar_url: faker.image.avatar(),
-    date: faker.date.past(5),
-    body: faker.lorem.paragraphs(),
-    flagged: faker.random.boolean(),
-  };
-
-  return Object.values(reviewObj);
+  // [
+  //   faker.name.findName(),
+  //   faker.image.avatar(),
+  //   faker.date.past(10),
+  //   faker.lorem.paragraphs(),
+  //   faker.random.boolean()
+  // ]
+  // {
+  //   author: faker.name.findName(),
+  //   avatar_url: faker.image.avatar(),
+  //   date: faker.date.past(5),
+  //   body: faker.lorem.paragraphs(),
+  //   flagged: faker.random.boolean()
+  // }
+  // return Object.values(reviewObj);
+  return Object.values(reviews);
 }
 
-function generateRating(reviewId, ratingId) {
-  const ratingObj = {
-    id: ratingId,
-    review_id: reviewId,
+function generateRating(n) {
+  const ratings = {
+    id: n,
+    name: faker.name.findName(),
     accuracy: faker.random.number({ min: 1, max: 5 }),
     communication: faker.random.number({ min: 1, max: 5 }),
     cleanliness: faker.random.number({ min: 1, max: 5 }),
     location: faker.random.number({ min: 1, max: 5 }),
     check_in: faker.random.number({ min: 1, max: 5 }),
-    value: faker.random.number({ min: 1, max: 5 }),
+    value: faker.random.number({ min: 1, max: 5 })
+    // reviews: generateReview()
   };
+  // [
+  //   faker.name.findName(),
+  //   faker.random.number({ min: 1, max: 5 }),
+  //   faker.random.number({ min: 1, max: 5 }),
+  //   faker.random.number({ min: 1, max: 5 }),
+  //   faker.random.number({ min: 1, max: 5 }),
+  //   faker.random.number({ min: 1, max: 5 }),
+  //   faker.random.number({ min: 1, max: 5 })
+  // ]
+  // {
+  //   name: faker.name.findName(),
+  //   accuracy: faker.random.number({ min: 1, max: 5 }),
+  //   communication: faker.random.number({ min: 1, max: 5 }),
+  //   cleanliness: faker.random.number({ min: 1, max: 5 }),
+  //   location: faker.random.number({ min: 1, max: 5 }),
+  //   check_in: faker.random.number({ min: 1, max: 5 }),
+  //   value: faker.random.number({ min: 1, max: 5 })
+  // }
 
-  return Object.values(ratingObj);
+  return Object.values(ratings);
 }
 
+// let reviewresult = "author, image, date, paragraph, boolean\n";
+// let ratingresult =
+//   "name, accuracy, communication, cleanliness, location, check_in, value\n";
+
 function seed() {
-  const reviews = [];
-  const ratings = [];
-  let target = 100;
-  while (target > 0) {
-    const review = generateReview();
-    console.log(review);
-    reviews.push(review);
-    ratings.push(generateRating(review[0], review[2]));
-    target -= 1;
+  var writerating = fs.createWriteStream(`ratings/ratings.csv`, {
+    flags: "w"
+  });
+  let writereview = fs.createWriteStream(`reviews/reviews.csv`, {
+    flags: "w"
+  });
+  function writeratingfunc() {
+    var ok = true;
+    var i = numDesired;
+    do {
+      i--;
+      let ratings = generateRating(i);
+      ratings = ratings.join(",");
+      ratings += "\n";
+      if (i === 0) {
+        writerating.write(ratings);
+      } else {
+        ok = writerating.write(ratings);
+      }
+    } while (i > 0 && ok);
+    if (i > 0) {
+      writerating.once("drain", writeratingfunc);
+    }
   }
-
-  db.query('INSERT INTO reviews (id, listing_id, rating_id, author, user_id, avatar_url, date, body, flagged) VALUES ?',
-    [reviews], (err, res) => {
-      if (err) throw err;
-      console.log(res.affectedRows);
-    });
-
-  db.query('INSERT INTO ratings (id, review_id, accuracy, communication, cleanliness, location, check_in, value) VALUES ?',
-    [ratings], (err, res) => {
-      if (err) throw err;
-      console.log(res.affectedRows);
-    });
+  function writereviewfunc() {
+    var ok = true;
+    var i = numDesired;
+    do {
+      i--;
+      let reviews = generateReview();
+      reviews = reviews.map(e => e.concat(i.toString()));
+      reviews = reviews.map(e => e.join(","));
+      reviews = reviews.join("\n");
+      reviews += "\n";
+      if (i === 0) {
+        writereview.write(reviews);
+      } else {
+        ok = writereview.write(reviews);
+      }
+    } while (i > 0 && ok);
+    if (i > 0) {
+      writereview.once("drain", writereviewfunc);
+    }
+  }
+  writeratingfunc();
+  writereviewfunc();
 }
 
 seed();
+
+console.log("done writing");
+
+// fs.appendFile(`ratings/ratings${j}.csv`, ratingresult, err => {
+//   if (err) {
+//     throw err;
+//   }
+// });
+// fs.appendFile(`reviews/reviews${j}.csv`, reviewresult, err => {
+//   if (err) {
+//     throw err;
+//   }
+// });

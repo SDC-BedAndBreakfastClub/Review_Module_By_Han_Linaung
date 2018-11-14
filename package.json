@@ -10,8 +10,8 @@
   "scripts": {
     "start": "nodemon server/app.js",
     "react-dev": "webpack -d --watch",
-    "db:seed": "node utils/db/seedDB.js",
-    "db:reset": "mysql -u student -p < server/schema.sql",
+    "seed": "node --expose-gc utils/db/seedDB.js",
+    "db:reset": "mysql -u root -p < schema.sql",
     "test": "jest"
   },
   "dependencies": {
@@ -25,12 +25,20 @@
     "express": "^4.16.4",
     "faker": "^4.1.0",
     "fs": "0.0.1-security",
+    "fs-extra": "^7.0.1",
+    "garbage-collector": "^1.2.0",
     "jquery": "^3.3.1",
+    "malloc": "^1.1.0",
+    "moment": "^2.22.2",
+    "mongo": "^0.1.0",
+    "mongoose": "^5.3.12",
     "mysql": "^2.16.0",
     "nodemon": "^1.18.4",
     "prop-types": "^15.6.2",
     "react": "^16.6.0",
-    "react-dom": "^16.6.0"
+    "react-dom": "^16.6.0",
+    "sequelize": "^4.41.2",
+    "supertest": "^3.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
