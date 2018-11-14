@@ -4,9 +4,9 @@
 
 ## Related Projects
 
-  - https://github.com/BedandBreakfastClub/airbnb-clone-photo-module
-  - https://github.com/BedandBreakfastClub/airbnb-clone-booking-module
-  - https://github.com/BedandBreakfastClub/airbnb-clone-similar-listings-module
+- https://github.com/BedandBreakfastClub/airbnb-clone-photo-module
+- https://github.com/BedandBreakfastClub/airbnb-clone-booking-module
+- https://github.com/BedandBreakfastClub/airbnb-clone-similar-listings-module
 
 ## Table of Contents
 
@@ -17,6 +17,7 @@
 ## Usage
 
 > Download, install and run all the related project services, then run the following command:
+
 ```sh
 npm run react-dev
 npm start
@@ -29,7 +30,12 @@ An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
 - Node 8.12.0
 - MySQL 5.7
 
-## Development
+## CRUD
+
+- GET api/rooms/:id/photos/ - gets photo by id from database
+- POST api/rooms/:id/photos/ - adds photo by id to database
+- PUT api/rooms/:id/photos/ - updates photo by id in database
+- DELETE api/rooms/:id/photos/ - removes photo by id from database
 
 ### Installing Dependencies
 
@@ -39,22 +45,12 @@ From within the root directory:
 npm install
 ```
 
-### Configuration
-
-From within the root directory:
-
-```
-cp example.config.js db.config.js
-```
-
-Edit the db.config.js file and replace the YOUR_DB_USERNAME an'YOUR_DB_PASSWORD fields with your MySQL username and password.
-
 ### Seeding the database
 
 From within the root directory:
 
 ```
-npm run db:seed
+npm run seed
 ```
 
 ### Running the server
