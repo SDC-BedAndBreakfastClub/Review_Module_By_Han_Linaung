@@ -2,7 +2,7 @@
   "name": "",
   "version": "",
   "description": "",
-  "author": "Gora Kong",
+  "author": "Han Linaung",
   "license": "",
   "engines": {
     "node": ">=6.13.0"
@@ -10,9 +10,10 @@
   "scripts": {
     "start": "nodemon server/app.js",
     "react-dev": "webpack -d --watch",
-    "seed": "node --expose-gc utils/db/seedDB.js",
-    "db:reset": "mysql -u root -p < schema.sql",
-    "test": "jest"
+    "seed": "node utils/db/seedDB.js",
+    "reset": "mysql -u root -p < schema.sql",
+    "test": "jest",
+    "feed": "sh ./seedingbash.sh"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.7",

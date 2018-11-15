@@ -1,24 +1,37 @@
-const mongoose = require("mongoose");
-mongoose.connect(
-  "mongodb://localhost/test",
-  { useNewUrlParser: true }
-);
+const mysql = require("mysql");
+// const configVars = require('../../config.js');
 
-var db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function() {
-  // we're connected!
+const pool = mysql.createConnection({
+  user: "hanlinaung",
+  database: "airbnb"
 });
 
-var RoomSchema = new mongoose.Schema({
-  name: String,
-  accuracy: Number,
-  communication: Number,
-  cleanliness: Number,
-  location: Number,
-  check_in: Number,
-  value: Number,
-  reviews: Array
-});
-var Room = mongoose.model("Room", RoomSchema, "Room");
-module.exports = Room;
+// function fetchAll(id, cb) {
+//   con.query(
+//     "select * from reviews, ratings where reviews.listing_id = ? and ratings.id = reviews.rating_id",
+//     [id],
+//     (err, res) => {
+//       if (err) {
+//         throw err;
+//       } else {
+//         cb(err, res);
+//       }
+//     }
+//   );
+// }
+// FLUSH TABLES;
+// ALTER TABLE `reviews` DISABLE KEYS;
+// ALTER TABLE `ratings` DISABLE KEYS;
+// LOAD DATA INFILE '/Users/hanlinaung/Documents/work/airbnb-clone-reviews-module/reviews/reviews.csv'
+// IGNORE INTO TABLE reviews
+// FIELDS TERMINATED BY ','
+// LINES TERMINATED BY '\n';
+
+// LOAD DATA INFILE '/Users/hanlinaung/Documents/work/airbnb-clone-reviews-module/ratings/ratings.csv'
+// IGNORE INTO TABLE ratings
+// FIELDS TERMINATED BY ','
+// LINES TERMINATED BY '\n';
+// ALTER TABLE `reviews` ENABLE KEYS;
+// ALTER TABLE `ratings` ENABLE KEYS;
+
+module.exports = pool;
