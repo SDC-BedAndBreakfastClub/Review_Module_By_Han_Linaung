@@ -9,11 +9,11 @@
   },
   "scripts": {
     "start": "nodemon server/app.js",
-    "react-dev": "webpack -d --watch",
+    "react": "webpack -d --watch",
     "seed": "node utils/db/seedDB.js",
     "reset": "mysql -u root -p < schema.sql",
     "test": "jest",
-    "feed": "sh ./seedingbash.sh"
+    "feed": "sh ./feeding.sh"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.7",
@@ -60,6 +60,7 @@
     "eslint-plugin-react": "^7.11.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^23.6.0",
+    "pg": "^7.6.1",
     "react-test-renderer": "^16.6.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.23.1",

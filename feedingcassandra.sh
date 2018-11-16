@@ -1,0 +1,2 @@
+COPY ratings (id, name, accuracy, communication, cleanliness, location, check_in, value) FROM 'ratings/*.csv' WITH HEADER=false AND DELIMITER=',';
+COPY reviews (id, author, image, date, body, flagged, room_id) FROM 'reviews/*.csv' WITH HEADER=false AND DELIMITER=',';

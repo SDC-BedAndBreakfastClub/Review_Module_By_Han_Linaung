@@ -2,9 +2,9 @@ const fs = require("fs");
 const faker = require("faker");
 const moment = require("moment");
 
-function generateRating(n) {
+function generateRating() {
   const ratings = {
-    id: n,
+    id: ++count,
     name: faker.name.findName(),
     accuracy: faker.random.number({ min: 1, max: 5 }),
     communication: faker.random.number({ min: 1, max: 5 }),
@@ -26,7 +26,7 @@ const writeratingfunc = (f, numDesired) => {
   var i = numDesired;
   do {
     i--;
-    let ratings = generateRating(i);
+    let ratings = generateRating();
     ratings = ratings.join(",");
     ratings += "\n";
     writerating.write(ratings);

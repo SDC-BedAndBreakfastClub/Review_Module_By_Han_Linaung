@@ -3,12 +3,13 @@ const faker = require("faker");
 const moment = require("moment");
 
 function generateReview(j, numofreviews) {
-  let count = 0;
+  let idz = 0;
   let reviews = [];
-  while (count++ < numofreviews) {
+  count1++;
+  while (idz++ < numofreviews) {
     reviews.push(
       "".concat(
-        count,
+        idz,
         ",",
         faker.name.findName(),
         ",",
@@ -20,20 +21,20 @@ function generateReview(j, numofreviews) {
         ",",
         faker.random.boolean(),
         ",",
-        j
+        count1
       )
     );
   }
   return reviews;
 }
-const writereviewfunc = async (f, numDesired, numofreviews) => {
+const writereviewfunc = (f, numDesired, numofreviews) => {
   var writereview = fs.createWriteStream(`reviews/reviews${f}.csv`, {
     flags: "w"
   });
   var j = numDesired;
   do {
     j--;
-    let reviews = await generateReview(j, numofreviews);
+    let reviews = generateReview(j, numofreviews);
     reviews = reviews.join("\n");
     reviews += "\n";
     writereview.write(reviews);

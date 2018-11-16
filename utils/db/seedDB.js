@@ -1,10 +1,9 @@
-const faker = require("faker");
-const fs = require("fs");
-const moment = require("moment");
 const generateReview = require("./generateReview.js");
 const generateRating = require("./generateRating.js");
 
 const db = require("../../server/database");
+global.count = 8000000;
+global.count1 = 8000000;
 
 var numDesired = 100000;
 var numofreviews = 10;
