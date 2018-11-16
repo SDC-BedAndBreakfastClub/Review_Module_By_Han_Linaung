@@ -24,3 +24,6 @@ CREATE TABLE reviews
   room_id INT
   -- UNIQUE (room_id, author)
 );
+
+CREATE INDEX reviewindex ON reviews (room_id);
+CREATE INDEX ratingindex ON ratings (id);
