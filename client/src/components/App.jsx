@@ -74,7 +74,7 @@ class App extends React.Component {
           aggregateRating={this.state.aggregateRating}
         />
         <hr />
-        <Ratings className="row" key={this.state.id} rating={this.state} />
+        <Ratings className="row" key={this.state.name} rating={this.state} />
         <Reviews className="row" reviewsData={this.state.reviews} />
       </div>
     );

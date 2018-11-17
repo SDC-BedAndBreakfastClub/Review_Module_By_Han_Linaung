@@ -1,14 +1,5 @@
 import React from "react";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
-
-library.add(faStar);
-
-function formatName(string) {
-  const s = string.replace("_", "-");
-  return s.charAt(0).toUpperCase() + s.slice(1);
-}
+import GetRowStars from "./Ratings2.jsx";
 
 function getRows(ratings) {
   var newarray = Object.entries(ratings);
@@ -20,35 +11,16 @@ function getRows(ratings) {
   return newarray;
 }
 
-function insertStars(n) {
-  const result = [];
-  let count = 0;
-  while (count < n) {
-    result.push(<FontAwesomeIcon icon="star" />);
-    count++;
-  }
-  return result;
-}
-
 const Ratings = props => {
-  return (
-    <div className="col">
-      {getRows(props.rating).map(row => (
-        <div className="row">
-          <div className="col-md-6">
-            <div className="row">
-              <div className="col">{formatName(row[0])}</div>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="row">
-              <div className="col">{insertStars(row[1])}</div>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
+  let count = 0;
+  let getrowfunc = getRows(props.rating);
+  return getrowfunc.map((e, i) => {
+    return (
+      <div className="row">
+        <GetRowStars key={i} value={e} />
+      </div>
+    );
+  });
 };
 
 export default Ratings;

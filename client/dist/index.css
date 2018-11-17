@@ -1,0 +1,17 @@
+.column {
+  display: flex;
+  width: 50%;
+  flex: 50%;
+  float: left;
+}
+
+.row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}

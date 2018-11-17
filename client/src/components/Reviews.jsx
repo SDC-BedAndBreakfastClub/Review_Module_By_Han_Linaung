@@ -4,8 +4,8 @@ import styles from "./Reviews.css";
 
 const Reviews = ({ reviewsData }) => (
   <div>
-    {reviewsData.map(review => (
-      <div key={review.id}>
+    {reviewsData.map((review, i) => (
+      <div key={i}>
         <div className={styles.review}>
           <div className="row">
             <div className="col-xs-2">
