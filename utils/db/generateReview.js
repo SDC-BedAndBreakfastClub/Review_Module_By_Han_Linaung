@@ -2,14 +2,15 @@ const fs = require("fs");
 const faker = require("faker");
 const moment = require("moment");
 
-function generateReview(j, numofreviews) {
-  let idz = 0;
+function generateReview(numofreviews) {
   let reviews = [];
+  let idz = 0;
   count1++;
   while (idz++ < numofreviews) {
+    count2++;
     reviews.push(
       "".concat(
-        idz,
+        count2,
         ",",
         faker.name.findName(),
         ",",
@@ -34,7 +35,7 @@ const writereviewfunc = (f, numDesired, numofreviews) => {
   var j = numDesired;
   do {
     j--;
-    let reviews = generateReview(j, numofreviews);
+    let reviews = generateReview(numofreviews);
     reviews = reviews.join("\n");
     reviews += "\n";
     writereview.write(reviews);

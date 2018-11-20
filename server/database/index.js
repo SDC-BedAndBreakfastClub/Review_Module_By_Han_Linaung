@@ -1,17 +1,9 @@
-var pg = require("pg");
-var knex = require("knex")({
-  client: "pg",
-  version: "7.2",
-  connection: {
-    host: "127.0.0.1",
-    user: "your_database_user",
-    database: "aibnb"
-    // seed: {}
-  }
-});
-var connection = "postgresql://hanlinaung@localhost/airbnb";
+var cassandra = require("cassandra-driver");
+var async = require("async");
 
-var client = new pg.Client(connection);
-client.connect();
+const client = new cassandra.Client({
+  contactPoints: ["127.0.0.1"],
+  keyspace: "airbnb"
+});
 
 module.exports = client;
