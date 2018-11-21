@@ -1,5 +1,6 @@
 const express = require("express");
 const queue = require("express-queue");
+var newrelic = require("newrelic");
 const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
@@ -10,6 +11,7 @@ const queueMw = queue({ activeLimit: 2, queuedLimit: -1 });
 app.use(express.static(path.join(__dirname, "/../client/dist")));
 app.use(bodyParser.json());
 app.use(cors());
+app.locals.newrelic = newrelic;
 
 app.use(queueMw);
 

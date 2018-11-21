@@ -34,6 +34,7 @@
     "mongo": "^0.1.0",
     "mongoose": "^5.3.12",
     "mysql": "^2.16.0",
+    "newrelic": "^4.11.0",
     "nodemon": "^1.18.4",
     "prop-types": "^15.6.2",
     "react": "^16.6.0",
