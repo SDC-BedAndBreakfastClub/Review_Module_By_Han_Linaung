@@ -5,11 +5,17 @@ const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
 const cors = require("cors");
-const fetchAll = require("./model/index.js");
+const {
+  fetchAll,
+  postReview,
+  deleteReview,
+  patchReview
+} = require("./model/index.js");
 const queueMw = queue({ activeLimit: 2, queuedLimit: -1 });
 
 app.use(express.static(path.join(__dirname, "/../client/dist")));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.locals.newrelic = newrelic;
 
@@ -17,8 +23,8 @@ app.use(queueMw);
 
 app.get("/api/rooms/:listingId/reviews", (req, res) => {
   const prequery = new Date();
-  const id = req.params.listingId;
-  fetchAll(1, (error, data) => {
+  const id = Number(req.params.listingId);
+  fetchAll(id, (error, data) => {
     if (error) {
       throw error;
     }
@@ -28,30 +34,23 @@ app.get("/api/rooms/:listingId/reviews", (req, res) => {
   });
 });
 app.post("/api/rooms/:listingId/reviews", (req, res) => {
-  const id = req.params.listingId;
-  fetchAll(1, (error, data) => {
-    if (error) {
-      throw error;
-    } else {
-      res.json(data);
-    }
+  const id = Number(req.params.listingId);
+  let review = req.body;
+  postReview(id, review, data => {
+    res.json(data);
   });
 });
 app.patch("/api/rooms/:listingId/reviews", (req, res) => {
-  const id = req.params.listingId;
-  fetchAll(id, (error, data) => {
-    if (error) {
-      throw error;
-    }
-    res.send(data);
+  const id = Number(req.params.listingId);
+  let review = req.body;
+  patchReview(id, review, data => {
+    res.json(data);
   });
 });
 app.delete("/api/rooms/:listingId/reviews", (req, res) => {
-  const id = req.params.listingId;
-  fetchAll(id, (error, data) => {
-    if (error) {
-      throw error;
-    }
+  const id = Number(req.params.listingId);
+  let review = req.body;
+  deleteReview(id, review, data => {
     res.json(data);
   });
 });

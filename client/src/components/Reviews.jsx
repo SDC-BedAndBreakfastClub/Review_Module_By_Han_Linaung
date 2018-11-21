@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "./Reviews.css";
 
-const Reviews = ({ reviewsData }) => (
+const Reviews = ({ reviewsData, deletefunc }) => (
   <div>
     {reviewsData.map((review, i) => (
       <div key={i}>
@@ -16,13 +16,25 @@ const Reviews = ({ reviewsData }) => (
               />
             </div>
             <div className="col-xs-10">
-              <strong>{review.author}</strong>
+              <strong id={"reviewauthor" + i}>{review.author}</strong>
               <br />
               {review.date}
             </div>
           </div>
           <div className="row">
-            <div className="col-xs-12">{review.body}</div>
+            <div className="col-xs-12" id={"reviewbody" + i}>
+              {review.body}
+            </div>
+            <button
+              onClick={() => {
+                let author = document.getElementById(`reviewauthor${i}`)
+                  .innerText;
+                let body = document.getElementById(`reviewbody${i}`).innerText;
+                deletefunc(author, body);
+              }}
+            >
+              Delete
+            </button>
           </div>
         </div>
         <hr />
