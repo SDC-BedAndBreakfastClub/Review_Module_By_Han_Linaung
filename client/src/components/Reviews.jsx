@@ -27,10 +27,9 @@ const Reviews = ({ reviewsData, deletefunc }) => (
             </div>
             <button
               onClick={() => {
-                let author = document.getElementById(`reviewauthor${i}`)
-                  .innerText;
-                let body = document.getElementById(`reviewbody${i}`).innerText;
-                deletefunc(author, body);
+                let id = review.id;
+                let roomid = review.room_id;
+                deletefunc(id, roomid);
               }}
             >
               Delete

@@ -54,11 +54,11 @@ class App extends React.Component {
     });
   }
 
-  deteleReview(author, body) {
+  deteleReview(id, roomid) {
     let url = `api/rooms/${this.state.currid}/reviews`;
     let options = {
       method: "DELETE",
-      body: JSON.stringify({ author, body }),
+      body: JSON.stringify({ id, roomid }),
       headers: {
         "Content-Type": "application/json"
       }
@@ -67,7 +67,7 @@ class App extends React.Component {
       .then(res => res.json())
       .then(data => {
         let obj = Object.assign({}, this.state);
-        obj = Object.assign(obj, data.ratings);
+        obj.reviews = data;
         this.setState(obj);
       })
       .catch(err => console.error(err));
