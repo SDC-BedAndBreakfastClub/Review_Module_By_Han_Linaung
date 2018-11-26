@@ -11,7 +11,7 @@ var models = ExpressCassandra.createClient({
       class: "SimpleStrategy",
       replication_factor: 1
     },
-    migration: "drop",
+    migration: "alter",
     createKeyspace: true,
     createTable: true,
     udts: {
@@ -36,7 +36,7 @@ var models = ExpressCassandra.createClient({
   }
 });
 
-var Ratings = models.loadSchema("Ratings", {
+var Ratings = models.loadSchema("Ratings1", {
   fields: {
     id: "int",
     ratings: {

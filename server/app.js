@@ -20,13 +20,11 @@ const {
 } = require("./model/index1.js");
 const queueMw = queue({ activeLimit: 2, queuedLimit: -1 });
 
-app.use(express.static(path.join(__dirname, "/../client/dist")));
+app.use(express.static(path.join(__dirname, "../client/dist")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.locals.newrelic = newrelic;
-
-app.use(queueMw);
 
 app.get("/api/rooms/:listingId/reviews", (req, res) => {
   const id = Number(req.params.listingId);

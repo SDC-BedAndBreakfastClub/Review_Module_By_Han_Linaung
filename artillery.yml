@@ -1,0 +1,14 @@
+config:
+  target: "http://127.0.0.1:8081"
+  phases:
+    - duration: 1
+      arrivalRate: 1
+  ws:
+    rejectUnauthorized: false
+  variables:
+    listingIds:
+      - "1"
+scenarios:
+  - flow:
+      - get:
+          url: "/api/rooms/{{ listingIds }}/reviews"
