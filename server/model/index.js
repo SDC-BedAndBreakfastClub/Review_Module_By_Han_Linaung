@@ -9,6 +9,7 @@ function fetchAll(id, cb) {
     }
   });
 }
+
 function postReview(id, data, cb) {
   Ratings.findOne({ id: id }, (err, res) => {
     if (err) {

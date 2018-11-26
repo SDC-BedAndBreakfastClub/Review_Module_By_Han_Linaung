@@ -1,9 +1,9 @@
 var ExpressCassandra = require("express-cassandra");
 var models = ExpressCassandra.createClient({
   clientOptions: {
-    contactPoints: ["127.0.0.1"], //<<<<your first ip
+    contactPoints: ["54.219.166.70"], //<<<<your first ip
     protocolOptions: { port: 9042 },
-    keyspace: "airbnb",
+    keyspace: "mykeyspace",
     queryOptions: { consistency: ExpressCassandra.consistencies.one }
   },
   ormOptions: {
@@ -12,8 +12,6 @@ var models = ExpressCassandra.createClient({
       replication_factor: 1
     },
     migration: "alter",
-    createKeyspace: true,
-    createTable: true,
     udts: {
       review: {
         author: "text",
