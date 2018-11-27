@@ -1,11 +1,21 @@
 config:
   target: "http://54.67.70.247/"
   phases:
-    - duration: 100
-      arrivalRate: 100000
+    - duration: 10
+      arrivalRate: 1000
+    - duration: 10
+      arrivalRate: 1000
   tls:
     rejectUnauthorized: false
 scenarios:
   - flow:
       - get:
           url: "/api/rooms/1/reviews"
+      - post:
+          url: "/api/rooms/1/reviews"
+          json:
+            author: "Jawad"
+            date: "October 2018"
+            body: "I hate every room that is available right now!!"
+            image: "https://s3.amazonaws.com/uifaces/faces/twitter/chrisvanderkooi/128.jpg"
+            flagged: "false"
