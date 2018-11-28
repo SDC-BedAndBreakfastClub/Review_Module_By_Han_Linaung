@@ -1,39 +1,75 @@
-const express = require("express");
-var newrelic = require("newrelic");
-const app = express();
-const bodyParser = require("body-parser");
-const path = require("path");
-const cors = require("cors");
-const port = process.env.PORT || 3000;
-const {
-  fetchAll,
-  postReview,
-  deleteReview,
-  patchReview
-} = require("./model/index.js");
-// const {
-//   fetchAll1,
-//   postReview1,
-//   deleteReview1,
-//   patchReview1
-// } = require("./model/index1.js");
-// const queueMw = queue({ activeLimit: 2, queuedLimit: -1 });
+import { superfetch, superdelete } from "./controller/superfetch1.js";
+import App from "../client/src/components/App.jsx";
+import React from "react";
+import ReactDOM from "react-dom";
+import { renderToString } from "react-dom/server";
+import { StaticRouter, matchPath } from "react-router-dom";
+import serialize from "serialize-javascript";
+import app from "./router/app.js";
 
-app.use(express.static(path.join(__dirname, "../client/dist")));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
-app.locals.newrelic = newrelic;
-
+app.get("/", (req, res, next) => {
+  const data = {
+    accuracy: 4,
+    check_in: 4,
+    cleanliness: 5,
+    communication: 1,
+    currid: 1,
+    location: 1,
+    name: "Carroll Hegmann",
+    reviews: [
+      {
+        id: 1,
+        author: "Blake Forrest",
+        image:
+          "https://s3.amazonaws.com/uifaces/faces/twitter/chrisvanderkooi/128.jpg",
+        date: "November 2018",
+        body: "I like this room. It was great!",
+        room_id: 1
+      }
+    ],
+    value: 5,
+    aggregateRating: 3
+  };
+  const markup = renderToString(
+    <StaticRouter location={req.url} context={data}>
+      <App />
+    </StaticRouter>
+  );
+  const template = `<!DOCTYPE html>
+<html>
+  <head>
+    <title>AirBnB</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Krub:400,700"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="bootstrap-grid.css" />
+    <link rel="stylesheet" href="index.css" />
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.js"
+      integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+      crossorigin="anonymous"
+    ></script>
+    <script>window.__INITIAL_DATA__ = ${data}</script>
+    <script type="text/javascript" src="bundle.js"></script>
+  </head>
+  <body>
+    <div id="reviews">${markup}</div>
+  </body>
+</html>`;
+  res.send(template).catch(next);
+});
 app.get("/api/rooms/:listingId/reviews", (req, res) => {
   const id = Number(req.params.listingId);
-  fetchAll(id, (error, data) => {
-    if (error) {
-      throw error;
-    } else {
-      res.json(data);
-    }
-  });
+  superfetch(id, res);
 });
 app.post("/api/rooms/:listingId/reviews", (req, res) => {
   const id = Number(req.params.listingId);
@@ -52,11 +88,9 @@ app.patch("/api/rooms/:listingId/reviews", (req, res) => {
 app.delete("/api/rooms/:listingId/reviews", (req, res) => {
   const id = Number(req.params.listingId);
   let review = req.body;
-  deleteReview(id, review, data => {
-    res.json(data);
-  });
+  superdelete(id, res, review);
 });
 
-app.listen(port, () => {
-  console.log("we are listening on port: ", port);
+app.listen(3000, () => {
+  console.log("we are listening on port: ", 3000);
 });

@@ -2,6 +2,7 @@ import React from "react";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
+
 library.add(faStar);
 
 function formatName(string) {
@@ -13,7 +14,7 @@ function insertStars(n) {
   const result = [];
   let count = 0;
   while (count < n) {
-    result.push(<FontAwesomeIcon icon="star" key={count} />);
+    result.push(<FontAwesomeIcon icon="star" key={count} size="1x" />);
     count++;
   }
   return result;

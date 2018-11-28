@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import styles from "./Header.css";
+import { search } from "./HeaderCSS.jsx";
 
 library.add(faStar);
 
@@ -28,7 +28,7 @@ const Header = ({ numReviews, overallRating }) => (
           type="text"
           placeholder="Search reviews"
           name="search"
-          className={styles.search}
+          className="search"
         />
       </h2>
     </div>

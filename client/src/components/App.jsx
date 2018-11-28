@@ -1,11 +1,10 @@
 import React from "react";
 import $ from "jquery";
-import classNames from "classnames";
-import styles from "./App.css";
 import Header from "./Header.jsx";
 import Ratings from "./Ratings.jsx";
 import Reviews from "./Reviews.jsx";
 import PostReviews from "./PostReviews.jsx";
+import { title, body } from "./AppCSS.jsx";
 
 class App extends React.Component {
   constructor(props) {
@@ -130,7 +129,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className={classNames({ [styles.body]: true, container: true })}>
+      <div className="container title">
         <Header
           className="container"
           numReviews={this.state.reviews.length}

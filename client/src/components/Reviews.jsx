@@ -1,18 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styles from "./Reviews.css";
+import { review, avatar } from "./ReviewsCSS.jsx";
 
 const Reviews = ({ reviewsData, deletefunc }) => (
   <div>
     {reviewsData.map((review, i) => (
       <div key={i}>
-        <div className={styles.review}>
+        <div className="review">
           <div className="row">
             <div className="col-xs-2">
               <img
                 alt="user profile pic"
                 src={review.image}
-                className={styles.avatar}
+                className="avatar"
               />
             </div>
             <div className="col-xs-10">
