@@ -1,15 +1,5 @@
-import App from "../../client/src/components/App.jsx";
-import React from "react";
-import { renderToString } from "react-dom/server";
-import { StaticRouter, matchPath } from "react-router-dom";
-import serialize from "serialize-javascript";
-
-const markup = renderToString(
-  <StaticRouter location={req.url}>
-    <App />
-  </StaticRouter>
-);
-const template = `<!DOCTYPE html>
+const template = (data, markup) => {
+  return `<!DOCTYPE html>
 <html>
   <head>
     <title>AirBnB</title>
@@ -20,15 +10,25 @@ const template = `<!DOCTYPE html>
     <link rel="stylesheet" href="bootstrap-grid.css" />
     <link rel="stylesheet" href="index.css" />
     <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script
       src="https://code.jquery.com/jquery-3.3.1.js"
       integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
       crossorigin="anonymous"
     ></script>
+    <script>window.__INITIAL_DATA__ =${data}</script>
   </head>
   <body>
     <div id="reviews">${markup}</div>
-    <script type="text/javascript" src="bundle.js" defer></script>
+    <script type="text/javascript" src="bundle.js"></script>
   </body>
 </html>`;
+};
 
-export default template;
+module.exports = template;

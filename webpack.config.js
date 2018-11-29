@@ -1,40 +1,47 @@
-const path = require("path");
+var path = require("path");
+var webpack = require("webpack");
+var nodeExternals = require("webpack-node-externals");
 
-module.exports = {
-  mode: "development",
-  entry: path.join(__dirname, "/client/src/index.jsx"),
+var browserConfig = {
+  entry: "./client/src/index.jsx",
+  output: {
+    path: path.resolve(__dirname, "./client/dist"),
+    filename: "bundle.js",
+    publicPath: "/"
+  },
   module: {
     rules: [
-      {
-        test: [/\.jsx$/],
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-react", "@babel/preset-env"]
-          }
-        }
-      },
-      {
-        test: /\.css$/,
-        use: [
-          { loader: "style-loader" },
-          {
-            loader: "css-loader",
-            options: {
-              modules: true,
-              localIdentName: "[name]_[local]_[hash:base64:5]"
-            }
-          }
-        ]
-      }
+      { test: /\.(jsx?)$/, use: "babel-loader" },
+      { test: /\.(css?)$/, use: ["style-loader", "css-loader"] }
     ]
   },
-  resolve: {
-    extensions: [".js", ".jsx"]
-  },
-  output: {
-    filename: "bundle.js",
-    path: path.join(__dirname, "/client/dist")
-  }
+  plugins: [
+    new webpack.DefinePlugin({
+      __isBrowser__: "true"
+    })
+  ]
 };
+
+var serverConfig = {
+  entry: "./server/app.js",
+  target: "node",
+  externals: [nodeExternals()],
+  output: {
+    path: __dirname,
+    filename: "server.js",
+    publicPath: "/"
+  },
+  module: {
+    rules: [
+      { test: /\.(jsx?)$/, use: "babel-loader" },
+      { test: /\.(css?)$/, use: ["style-loader", "css-loader"] }
+    ]
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      __isBrowser__: "false"
+    })
+  ]
+};
+
+module.exports = [browserConfig, serverConfig];
