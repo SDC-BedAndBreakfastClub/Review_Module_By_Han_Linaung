@@ -1,31 +1,31 @@
 nginx:
-  build: ./NGINX
+  image: hanlinaunghack/nginx:latest
   links:
     - server1:server1
     - server2:server2
-    - server3:server3
+  depends_on:
+    - server1
+    - saerver2
   ports:
     - "80:80"
 server1:
-  build: ./node
+  image: hanlinaunghack/sdcreview
   links:
     - redis
+  environment:
+    - REDIS_URL=redis://cache
   ports:
     - "3000"
 server2:
-  build: ./node
+  image: hanlinaunghack/sdcreview
   links:
     - redis
-  ports:
-    - "3000"
-server3:
-  build: ./node
-  links:
-    - redis
+  environment:
+    - REDIS_URL=redis://cache
   ports:
     - "3000"
 redis:
-  image: redis
+  image: redis:latest
   container_name: cache
   ports:
     - "6379"

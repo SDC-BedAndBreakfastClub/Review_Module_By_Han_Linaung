@@ -1,0 +1,12 @@
+# __mocks__
+# __tests__
+
+# node_modules
+# artillery.yml
+# artillerypost.yml
+
+# *.png
+
+# enzyme.config.jsjest.config.js
+
+# *.txt
