@@ -1,19 +1,37 @@
 import React from "react";
 import $ from "jquery";
-import classNames from "classnames";
-import styles from "./App.css";
-import Header from "./Header";
-import Ratings from "./Ratings";
-import Reviews from "./Reviews";
+import Header from "./Header.jsx";
+import Ratings from "./Ratings.jsx";
+import Reviews from "./Reviews.jsx";
+import PostReviews from "./PostReviews.jsx";
+import { title, body } from "./AppCSS.jsx";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-
+    this.getReviews = this.getReviews.bind(this);
+    this.getRatingBreakdown = this.getRatingBreakdown.bind(this);
     this.state = {
-      reviews: [],
-      rating: {},
-      aggregateRating: null
+      accuracy: 4,
+      check_in: 4,
+      cleanliness: 5,
+      communication: 1,
+      currid: 1,
+      location: 1,
+      name: "Carroll Hegmann",
+      reviews: [
+        {
+          id: 1,
+          author: "Blake Forrest",
+          image:
+            "https://s3.amazonaws.com/uifaces/faces/twitter/chrisvanderkooi/128.jpg",
+          date: "November 2018",
+          body: "I like this room. It was great!",
+          room_id: 1
+        }
+      ],
+      value: 5,
+      aggregateRating: 3
     };
   }
 
@@ -22,71 +40,113 @@ class App extends React.Component {
   }
 
   getReviews() {
-    $.ajax({
-      url: `api/rooms/2/reviews`,
-      type: "GET",
-      contentType: "application/json",
-      success: data => {
-        this.getRatingBreakdown(data);
-      },
-      error: error => {
-        console.error("error fetching data from db", error);
+    let url = `api/rooms/${this.state.currid}/reviews`;
+    let options = {
+      methoed: "GET",
+      headers: {
+        "Content-Type": "application/json"
       }
-    });
+    };
+    fetch(url, options)
+      .then(res => res.json())
+      .then(data => {
+        let obj = Object.assign({}, this.state);
+        obj.reviews = data.reviews;
+        this.setState(obj);
+      })
+      .catch(err => console.error(err));
   }
 
-  getRatingBreakdown(reviews) {
-    let rating = {};
-    rating = reviews.reduce(
-      (acc, review) => {
-        acc.accuracy += review.accuracy;
-        acc.communication += review.communication;
-        acc.cleanliness += review.cleanliness;
-        acc.location += review.location;
-        acc.check_in += review.check_in;
-        acc.value += review.value;
-        return acc;
-      },
-      {
-        accuracy: 0,
-        communication: 0,
-        cleanliness: 0,
-        location: 0,
-        check_in: 0,
-        value: 0
+  deteleReview(id, roomid) {
+    let url = `api/rooms/${this.state.currid}/reviews`;
+    let options = {
+      method: "DELETE",
+      body: JSON.stringify({ id, roomid }),
+      headers: {
+        "Content-Type": "application/json"
       }
+    };
+    fetch(url, options)
+      .then(res => res.json())
+      .then(data => {
+        let obj = Object.assign({}, this.state);
+        obj.reviews = data;
+        this.setState(obj);
+      })
+      .catch(err => console.error(err));
+  }
+
+  sendReviews(data) {
+    let array = this.state.reviews.filter(
+      e => e.author.toLowerCase() === data.author.toLowerCase()
     );
+    let url = `api/rooms/${this.state.currid}/reviews`;
+    if (array.length) {
+      data.image = array[0].image;
+      data.flagged = array[0].flagged;
+      let options = {
+        method: "PATCH",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      };
+      fetch(url, options)
+        .then(res => res.json())
+        .then(data => {
+          let obj = Object.assign({}, this.state);
+          obj = Object.assign(obj, data.ratings);
+          this.setState(obj);
+        })
+        .catch(err => console.error(err));
+    } else {
+      let options = {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      };
+      fetch(url, options)
+        .then(res => res.json())
+        .then(data => {
+          let obj = Object.assign({}, this.state);
+          obj = Object.assign(obj, data.ratings);
+          this.setState(obj);
+        })
+        .catch(err => console.error(err));
+    }
+  }
 
-    Object.keys(rating).forEach(category => {
-      rating[category] /= reviews.length;
-    });
-
-    const aggregateRating =
-      Object.keys(rating).reduce((acc, category) => {
-        let total = acc;
-        total += rating[category];
-        return total;
-      }, 0) / reviews.length;
-
-    this.setState({
-      reviews,
-      rating,
-      aggregateRating
-    });
+  getRatingBreakdown(data) {
+    data.aggregateRating = Math.ceil(
+      (data.cleanliness +
+        data.value +
+        data.accuracy +
+        data.check_in +
+        data.location +
+        data.communication) /
+        6
+    );
+    this.setState(data);
   }
 
   render() {
-    const { reviews, rating, aggregateRating } = this.state;
     return (
-      <div className={classNames({ [styles.body]: true, container: true })}>
+      <div className="container title">
         <Header
           className="container"
-          numReviews={reviews.length}
-          aggregateRating={aggregateRating}
+          numReviews={this.state.reviews.length}
+          aggregateRating={this.state.aggregateRating}
         />
         <hr />
-        <Ratings className="row" rating={rating} />
-        <Reviews className="row" reviewsData={reviews} />
+        <Ratings className="row" key={this.state.name} rating={this.state} />
+        <Reviews
+          className="row"
+          reviewsData={this.state.reviews}
+          deletefunc={this.deteleReview.bind(this)}
+        />
+        <PostReviews sendReview={this.sendReviews.bind(this)} />
       </div>
     );
   }

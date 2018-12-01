@@ -1,26 +1,39 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styles from './Reviews.css';
+import React from "react";
+import PropTypes from "prop-types";
+import { review, avatar } from "./ReviewsCSS.jsx";
 
-const Reviews = ({ reviewsData }) => (
+const Reviews = ({ reviewsData, deletefunc }) => (
   <div>
-    {reviewsData.map(review => (
-      <div key={review.id}>
-        <div className={styles.review}>
+    {reviewsData.map((review, i) => (
+      <div key={i}>
+        <div className="review">
           <div className="row">
             <div className="col-xs-2">
-              <img alt="user profile pic" src={review.avatar_url} className={styles.avatar} />
+              <img
+                alt="user profile pic"
+                src={review.image}
+                className="avatar"
+              />
             </div>
             <div className="col-xs-10">
-              <strong>{review.author}</strong>
+              <strong id={"reviewauthor" + i}>{review.author}</strong>
               <br />
               {review.date}
             </div>
           </div>
           <div className="row">
-            <div className="col-xs-12">
+            <div className="col-xs-12" id={"reviewbody" + i}>
               {review.body}
             </div>
+            <button
+              onClick={() => {
+                let id = review.id;
+                let roomid = review.room_id;
+                deletefunc(id, roomid);
+              }}
+            >
+              Delete
+            </button>
           </div>
         </div>
         <hr />
@@ -30,7 +43,7 @@ const Reviews = ({ reviewsData }) => (
 );
 
 Reviews.propTypes = {
-  reviewsData: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  reviewsData: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired
 };
 
 export default Reviews;

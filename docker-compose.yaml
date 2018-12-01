@@ -1,0 +1,5 @@
+server1:
+  # build: .
+  image: hanlinaunghack/sdcreview:latest
+  ports:
+    - "80:3000"

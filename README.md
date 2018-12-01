@@ -32,10 +32,10 @@ An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
 
 ## CRUD
 
-- GET api/rooms/:id/photos/ - gets photo by id from database
-- POST api/rooms/:id/photos/ - adds photo by id to database
-- PUT api/rooms/:id/photos/ - updates photo by id in database
-- DELETE api/rooms/:id/photos/ - removes photo by id from database
+- GET /api/rooms/:listingId/reviews - gets reviews by id from database
+- POST "/api/rooms/:listingId/reviews" - adds reviews by id to database
+- PUT "/api/rooms/:listingId/reviews" - updates reviews by id in database
+- DELETE "/api/rooms/:listingId/reviews" - removes reviews by id from database
 
 ### Installing Dependencies
 

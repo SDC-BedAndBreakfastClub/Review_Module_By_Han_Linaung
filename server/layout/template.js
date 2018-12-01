@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+const template = (data, markup) => {
+  return `<!DOCTYPE html>
 <html>
   <head>
     <title>AirBnB</title>
@@ -21,9 +22,13 @@
       integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
       crossorigin="anonymous"
     ></script>
+    <script>window.__INITIAL_DATA__ =${data}</script>
   </head>
   <body>
-    <div id="reviews"></div>
+    <div id="reviews">${markup}</div>
     <script type="text/javascript" src="bundle.js"></script>
   </body>
-</html>
+</html>`;
+};
+
+module.exports = template;

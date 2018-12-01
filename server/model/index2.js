@@ -1,6 +1,6 @@
-const Ratings = require("../database/inex.js");
+const Ratings = require("../database/inex2.js");
 
-function fetchAll(id, cb) {
+function fetchAll2(id, cb) {
   Ratings.findOne({ id: id }, (err, res) => {
     if (err) {
       throw err;
@@ -10,7 +10,7 @@ function fetchAll(id, cb) {
   });
 }
 
-function postReview(id, data, cb) {
+function postReview2(id, data, cb) {
   Ratings.findOne({ id: id }, (err, res) => {
     if (err) {
       throw err;
@@ -26,7 +26,7 @@ function postReview(id, data, cb) {
   });
 }
 
-function deleteReview(id, data, cb) {
+function deleteReview2(id, data, cb) {
   Ratings.findOne({ id: id }, (err, res) => {
     if (err) {
       throw err;
@@ -43,7 +43,7 @@ function deleteReview(id, data, cb) {
     }
   });
 }
-function patchReview(id, data, cb) {
+function patchReview2(id, data, cb) {
   Ratings.findOne({ id: id }, (err, res) => {
     if (err) {
       throw err;
@@ -65,4 +65,4 @@ function patchReview(id, data, cb) {
   });
 }
 
-module.exports = { fetchAll, postReview, deleteReview, patchReview };
+module.exports = { fetchAll2, postReview2, deleteReview2, patchReview2 };

@@ -1,0 +1,19 @@
+config:
+  target: "http://localhost:3000"
+  processor: "./my-functions.js"
+  phases:
+    - duration: 60
+      arrivalRate: 100
+  ws:
+    rejectUnauthorized: false
+
+scenarios:
+  - flow:
+      - function: "generateRandomData"
+      - post:
+          url: "/api/movies"
+          json:
+            title: "{{ title }}"
+            year: "{{ year }}"
+            image: "{{ image }}"
+            actor: "{{ actor }}"

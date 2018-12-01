@@ -1,0 +1,44 @@
+.column {
+  display: flex;
+  width: 50%;
+  flex: 50%;
+  float: left;
+}
+
+.row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.title {
+  background-color: mistyrose;
+}
+
+.body {
+  font-family: "Krub", sans-serif;
+}
+
+.search {
+  width: 100%;
+}
+
+.review {
+  margin: 20px;
+  padding-bottom: 10px;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 50px;
+  margin-right: 10px;
+}
+
+.stars {
+  size: 14px;
+}
