@@ -1,7 +1,7 @@
 var ExpressCassandra = require("express-cassandra");
 var models = ExpressCassandra.createClient({
   clientOptions: {
-    contactPoints: ["13.57.245.133"],
+    contactPoints: ["54.215.253.71"],
     protocolOptions: { port: 9042 },
     keyspace: "mykeyspace",
     queryOptions: { consistency: ExpressCassandra.consistencies.one }
@@ -9,7 +9,7 @@ var models = ExpressCassandra.createClient({
   ormOptions: {
     defaultReplicationStrategy: {
       class: "SimpleStrategy",
-      replication_factor: 1
+      replication_factor: 3
     },
     migration: "alter",
     udts: {

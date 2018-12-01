@@ -66,6 +66,7 @@ const switcher = id => {
       obj.patchReview = patchReview1b;
       return obj;
       break;
+    case id >= 2937477:
       obj.fetchAll = fetchAll1;
       obj.postReview = postReview1;
       obj.deleteReview = deleteReview1;

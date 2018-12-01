@@ -4,10 +4,15 @@ import ReactDOM from "react-dom";
 import { renderToString } from "react-dom/server";
 import { StaticRouter, matchPath } from "react-router-dom";
 import App from "../../client/src/components/App.jsx";
-import { superfetch, superdelete } from "../controller/superfetch1.js";
-import client from "../redis/redis-cli.js";
+import {
+  superfetch,
+  superdelete,
+  superpost
+} from "../controller/superfetch.js";
+import path from "path";
 
 const router = express.Router();
+
 router.get("/", (req, res, next) => {
   const data = {
     accuracy: 4,
@@ -76,7 +81,7 @@ router.get("/api/rooms/:listingId/reviews", (req, res) => {
 router.post("/api/rooms/:listingId/reviews", (req, res) => {
   const id = Number(req.params.listingId);
   let review = req.body;
-  postReview(id, review, data => {
+  superpost(id, review, data => {
     res.json(data);
   });
 });

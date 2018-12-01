@@ -1,10 +1,13 @@
 const redis = require("redis");
-const { promisify } = require("util");
-const client = redis.createClient(process.env.REDIS_URL);
 
-module.exports = {
-  ...client,
-  getAsync: promisify(client.get).bind(client),
-  setAsync: promisify(client.set).bind(client),
-  keysAsync: promisify(client.keys).bind(client)
-};
+const client = redis.createClient("6379", "54.153.46.58"); //process.env.REDIS_URL
+
+client.on("connect", () => {
+  console.log("Redis client connected");
+});
+
+client.on("error", err => {
+  console.log(`Something went wrong ${err}`);
+});
+
+module.exports = client;

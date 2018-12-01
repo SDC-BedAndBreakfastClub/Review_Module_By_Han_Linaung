@@ -1,4 +1,4 @@
-const Ratings = require("../database/inex1a.js");
+const Ratings = require("../database/inex1b.js");
 
 function fetchAll1a(id, cb) {
   Ratings.findOne({ id: id }, (err, res) => {

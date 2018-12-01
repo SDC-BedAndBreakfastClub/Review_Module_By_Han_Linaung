@@ -40,17 +40,21 @@ class App extends React.Component {
   }
 
   getReviews() {
-    $.ajax({
-      url: `api/rooms/${this.state.currid}/reviews`,
-      type: "GET",
-      contentType: "application/json",
-      success: data => {
-        this.getRatingBreakdown(data);
-      },
-      error: error => {
-        console.error("error fetching data from db", error);
+    let url = `api/rooms/${this.state.currid}/reviews`;
+    let options = {
+      methoed: "GET",
+      headers: {
+        "Content-Type": "application/json"
       }
-    });
+    };
+    fetch(url, options)
+      .then(res => res.json())
+      .then(data => {
+        let obj = Object.assign({}, this.state);
+        obj.reviews = data.reviews;
+        this.setState(obj);
+      })
+      .catch(err => console.error(err));
   }
 
   deteleReview(id, roomid) {

@@ -12,7 +12,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("combined"));
 app.use(cors());
-app.use(require("express-redis")());
 app.locals.newrelic = newrelic;
 
 module.exports = app;
